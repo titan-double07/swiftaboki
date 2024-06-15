@@ -15,12 +15,12 @@ export default function FormHeader({
   }
 
   return (
-    <div>
+    <div >
       <TextBg
-        className="!text-xl md:!text-4xl text-purple-200 !font-extrabold"
+        className="!text-xl lg:!text-4xl text-left text-purple-200 !font-extrabold"
         content={headerArr[activeTab - 1]}
       />
-      <div className="flex justify-start gap-3 items-center mt-4">
+      <div className="flex justify-start  gap-3 items-center mt-4">
         {headerArr.map((_head, index) => (
           <div
             className={`${

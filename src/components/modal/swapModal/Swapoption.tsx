@@ -11,7 +11,7 @@ interface ISwapOption {
 export default function Swapoption({handleInstantExchange,handleP2P}:ISwapOption) {
   return (
     <div>
-      <ModalHeaderText content="Swap" className="pl-12 mb-8" />
+      <ModalHeaderText content="Swap" className="md:pl-12 mb-8 text-center md:text-left" />
       <div className="w-full px-12">
         <ModalFlex
           headerText="Instant Exchange"

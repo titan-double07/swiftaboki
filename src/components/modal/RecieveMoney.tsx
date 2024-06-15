@@ -58,7 +58,8 @@ export default function RecieveMoney({ closeModal }: IRecieveMoney) {
       initial="hidden"
       animate="visible"
       exit="exit"
-      className={` lg:w-[29vw] w-4/5 md:w-3/5 pt-32  py-12 pb-36 relative z-[999] h-screen bg-white overflow-y-scroll`}>
+      className={` lg:w-[29vw] w-full
+md:pt-36 md:w-3/5 pt-32  py-12 pb-36 relative z-[999] h-screen bg-white overflow-y-scroll`}>
       <div className="pl-12 w-full">
         <ModalHeaderFlex Text="Recieve Money" handleBack={closeModal} />
       </div>
@@ -75,7 +76,7 @@ export default function RecieveMoney({ closeModal }: IRecieveMoney) {
         className="text-grey-100 text-center"
       />
 
-      <div className="w-full mt-8 px-12">
+      <div className="w-full mt-8 md:px-12 px-8">
         <div className="!bg-grey-400 px-[1.69rem] rounded-secondary py-6">
           <p className="text-md font-semibold">Account Name</p>
           <div className="w-full mt-2 px-4 h-8 !bg-white border border-black rounded-primary flex justify-between items-center">

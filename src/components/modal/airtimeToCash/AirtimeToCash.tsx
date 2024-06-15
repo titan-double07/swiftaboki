@@ -83,7 +83,8 @@ export default function AirtimeToCash({ closeModal }: IAirtimeToCash) {
       initial="hidden"
       animate="visible"
       exit="exit"
-      className={` lg:w-[29vw] w-4/5 md:w-3/5 pt-32  py-12 pb-36 relative z-[999] h-screen bg-white overflow-y-scroll`}>
+      className={` lg:w-[29vw] w-full
+md:pt-36 md:w-3/5 pt-32  py-12 pb-36 relative z-[999] h-screen bg-white overflow-y-scroll`}>
       <div className="pl-12 w-full">
         <ModalHeaderFlex
           handleBack={closeModal}

@@ -18,12 +18,26 @@ import Swapoption from "./Swapoption";
 import CurrencySelect from "./CurrencySelect";
 import InstantExchange from "./InstantExchange";
 import TransactionPin from "./TransactionPin";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer";
+import { Mobile, TabletAbove } from "@/lib/mediaQuery";
 
 interface ISwapModal {
   openP2PModal(type: string): void;
+
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function SwapModal({ openP2PModal }: ISwapModal) {
+export default function SwapModal({
+  openP2PModal,
+  showModal,
+  setShowModal,
+}: ISwapModal) {
   const [activeTab, setActiveTab] = useState(0);
 
   const [swapOption, setSwapOption] = useState<string | null>(null);
@@ -83,54 +97,109 @@ export default function SwapModal({ openP2PModal }: ISwapModal) {
   });
 
   return (
-    <motion.div
-      variants={slideIn}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      className={`lg:w-[29vw] w-4/5 md:w-3/5 pt-32 py-12 pb-36 relative z-[999] h-screen bg-white overflow-y-scroll`}>
-      {swapOption === null && (
-        <Swapoption
-          handleInstantExchange={handleInstantExchange}
-          handleP2P={handleP2P}
-        />
-      )}
+    <>
+      <motion.div
+        variants={slideIn}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        className={` lg:w-[29vw] w-4/5 md:w-3/5 pt-32 py-12 pb-36 relative z-[999] h-screen bg-white overflow-y-scroll md:block hidden  `}>
+        {swapOption === null && (
+          <Swapoption
+            handleInstantExchange={handleInstantExchange}
+            handleP2P={handleP2P}
+          />
+        )}
 
-      {swapOption === "exchange" && activeTab === 1 && (
-        <div className="w-full">
-          <InstantExchange
-            activeTab={activeTab}
-            handleSwap={handleSwap}
+        {swapOption === "exchange" && activeTab === 1 && (
+          <div className="w-full">
+            <InstantExchange
+              activeTab={activeTab}
+              handleSwap={handleSwap}
+              setActiveTab={setActiveTab}
+              setClickedDropDown={setClickedDropDown}
+              setShowCurrencyOptionModal={setShowCurrencyOptionModal}
+              setSwapAmount={setSwapAmount}
+              setSwapOption={setSwapOption}
+              showCurrencyOptionModal={showCurrencyOptionModal}
+              swapAmount={swapAmount}
+              swapFromValue={swapFromValue}
+              swapToValue={swapToValue}
+              swapped={swapped}>
+              <div
+                className="modal-backdrop w-full h-screen fixed flex justify-end left-0 top-[16.3%] bg-[#00000042]"
+                onClick={close}>
+                <CurrencySelect
+                  accounts={accounts}
+                  handleCurrencySelect={handleCurrencySelect}
+                />
+              </div>
+            </InstantExchange>
+          </div>
+        )}
+
+        {swapOption === "exchange" && activeTab === 2 && (
+          <TransactionPin
             setActiveTab={setActiveTab}
-            setClickedDropDown={setClickedDropDown}
-            setShowCurrencyOptionModal={setShowCurrencyOptionModal}
-            setSwapAmount={setSwapAmount}
-            setSwapOption={setSwapOption}
-            showCurrencyOptionModal={showCurrencyOptionModal}
-            swapAmount={swapAmount}
             swapFromValue={swapFromValue}
+            setSwapOption={setSwapOption}
             swapToValue={swapToValue}
-            swapped={swapped}>
-            <div
-              className="modal-backdrop w-full h-screen fixed flex justify-end left-0 top-[16.3%] bg-[#00000042]"
-              onClick={close}>
-              <CurrencySelect
-                accounts={accounts}
-                handleCurrencySelect={handleCurrencySelect}
+          />
+        )}
+      </motion.div>
+      <Mobile>
+        <Drawer open={showModal} onOpenChange={setShowModal}>
+          <DrawerContent>
+            {swapOption === null && (
+              <Swapoption
+                handleInstantExchange={handleInstantExchange}
+                handleP2P={handleP2P}
               />
-            </div>
-          </InstantExchange>
-        </div>
-      )}
+            )}
+            {swapOption === "exchange" && activeTab === 1 && (
+              <div
+                className={`  w-full  py-12 pb-36 relative z-[999] h-screen bg-white overflow-y-scroll  `}>
+                <div className="w-full">
+                  <InstantExchange
+                    activeTab={activeTab}
+                    handleSwap={handleSwap}
+                    setActiveTab={setActiveTab}
+                    setClickedDropDown={setClickedDropDown}
+                    setShowCurrencyOptionModal={setShowCurrencyOptionModal}
+                    setSwapAmount={setSwapAmount}
+                    setSwapOption={setSwapOption}
+                    showCurrencyOptionModal={showCurrencyOptionModal}
+                    swapAmount={swapAmount}
+                    swapFromValue={swapFromValue}
+                    swapToValue={swapToValue}
+                    swapped={swapped}>
+                    <div
+                      className="modal-backdrop w-full h-screen fixed flex justify-end left-0 top-[16.3%] bg-[#00000042]"
+                      onClick={close}>
+                      <CurrencySelect
+                        accounts={accounts}
+                        handleCurrencySelect={handleCurrencySelect}
+                      />
+                    </div>
+                  </InstantExchange>
+                </div>
+              </div>
+            )}
 
-      {swapOption === "exchange" && activeTab === 2 && (
-        <TransactionPin
-          setActiveTab={setActiveTab}
-          swapFromValue={swapFromValue}
-          setSwapOption={setSwapOption}
-          swapToValue={swapToValue}
-        />
-      )}
-    </motion.div>
+            {swapOption === "exchange" && activeTab === 2 && (
+              <div
+                className={`  w-screen  py-12 pb-36 relative z-[999] h-screen bg-white overflow-y-scroll  `}>
+                <TransactionPin
+                  setActiveTab={setActiveTab}
+                  swapFromValue={swapFromValue}
+                  setSwapOption={setSwapOption}
+                  swapToValue={swapToValue}
+                />
+              </div>
+            )}
+          </DrawerContent>
+        </Drawer>
+      </Mobile>
+    </>
   );
 }

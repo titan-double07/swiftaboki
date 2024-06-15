@@ -31,13 +31,13 @@ export default function QuickActions({ openModal }: IQuickActions) {
   ];
 
   return (
-    <div className="lg:w-[64.2vw] md:mt-10 flex justify-start gap-4 flex-wrap">
+    <div className="md:w-[64.2vw] w-full rounded-secondary md:rounded-none
+      overflow-hidden  md:overflow-auto md:mt-10 flex justify-start md:gap-4 flex-wrap">
       {quickActionsArr.map((action, index) => (
         <div
-          className=" px-4 h-16   rounded-secondary bg-grey-400 flex justify-start gap-6 items-center hover:scale-105 transition-all cursor-pointer"
+          className=" px-4 h-16 w-full md:w-auto   md:rounded-secondary bg-grey-400 flex justify-start gap-6 items-center hover:scale-105 transition-all cursor-pointer"
           key={index}
-          onClick={()=>openModal(action.label)}
-        >
+          onClick={() => openModal(action.label)}>
           <div className="w-8 rounded-full shrink-0 bg-purple-200 h-8 flex justify-center items-center">
             {action.icon}
           </div>

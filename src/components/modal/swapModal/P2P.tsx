@@ -49,10 +49,11 @@ export default function P2P({ closeModal }: IP2P) {
       animate="visible"
       exit="exit"
       className={`${
-        showSelectCurrencyDropdown || showBuyP2PModal ? "w-[32vw]" : " w-[54.44vw] "
-      } transition-all relative pt-32 py-12 pb-16 z-[99999] h-screen bg-white overflow-y-scroll`}
-    >
-      <div className="flex justify-start gap-[18rem] items-center px-6">
+        showSelectCurrencyDropdown || showBuyP2PModal
+          ? "w-[32vw]"
+          : " lg:w-[54.44vw] "
+      } transition-all relative pt-32 py-12 pb-16 z-[99999] h-screen w-screen md:w-auto bg-white overflow-y-scroll`}>
+      <div className="flex md:justify-start md:gap-[18rem] gap-28 items-center px-12">
         <Icons.back
           onClick={() => {
             closeModal();
@@ -63,15 +64,14 @@ export default function P2P({ closeModal }: IP2P) {
       </div>
 
       <div
-        className="w-[25%] flex justify-between items-center px-5 mt-8 mx-auto rounded-secondary cursor-pointer py-3 bg-grey-400"
+        className="md:w-[25%] w-2/5 flex justify-between items-center px-5 mt-8 mx-auto rounded-secondary cursor-pointer py-3 bg-grey-400"
         onClick={() => {
           setShowSelectCurrencyDropdown(true);
-        }}
-      >
-        <div className="w-10 h-10 rounded-full">
+        }}>
+        <div className=" size-10 rounded-full shrink-0 space-x-5">
           <Image
             src={baseCurrency.img}
-            className="w-full h-full rounded-full"
+            className="w-full h-full rounded-full "
             alt=""
           />
         </div>
@@ -85,14 +85,12 @@ export default function P2P({ closeModal }: IP2P) {
       <div className="w-[43%] relative h-10 rounded-primary bg-grey-400 mx-auto mt-8 flex justify-center items-center">
         <div
           className="w-1/2 h-full text-md cursor-pointer font-medium text-grey-100 flex justify-center items-center"
-          onClick={() => toggleTab("Buy")}
-        >
+          onClick={() => toggleTab("Buy")}>
           Buy
         </div>
         <div
           className="w-1/2 h-full text-md cursor-pointer font-medium text-grey-100 flex justify-center items-center rounded-tr-primary rounded-br-primary"
-          onClick={() => toggleTab("Sell")}
-        >
+          onClick={() => toggleTab("Sell")}>
           Sell
         </div>
 
@@ -101,18 +99,16 @@ export default function P2P({ closeModal }: IP2P) {
             selectedTab === "Buy"
               ? "left-0  bg-purple-200"
               : "left-1/2  bg-black"
-          } absolute rounded-primary cursor-pointer transition-all top-0 h-full w-1/2 text-md font-medium text-white flex justify-center items-center`}
-        >
+          } absolute rounded-primary cursor-pointer transition-all top-0 h-full w-1/2 text-md font-medium text-white flex justify-center items-center`}>
           {selectedTab}
         </div>
       </div>
 
-      <div className="w-full flex justify-between flex-wrap  mt-12 px-12">
+      <div className="w-full flex md:flex-row flex-col justify-between flex-wrap  mt-12 px-12">
         {[1, 2, 3, 4, 5, 6].map((card, index) => (
           <div
-            className="w-[48%] mb-8 rounded-primary bg-grey-400 p-4"
-            key={index}
-          >
+            className="md:w-[48%] mb-8 rounded-primary bg-grey-400 p-4"
+            key={index}>
             <div className="flex justify-between items-center ">
               <TextSm
                 content="Merchant Name"
@@ -145,8 +141,7 @@ export default function P2P({ closeModal }: IP2P) {
 
               <button
                 className="text-white hover:scale-105 transition-all text-md bg-grey-100 w-14 h-10 rounded-primary"
-                onClick={handleShowBuyP2PModal}
-              >
+                onClick={handleShowBuyP2PModal}>
                 {selectedTab}
               </button>
             </div>
@@ -154,13 +149,16 @@ export default function P2P({ closeModal }: IP2P) {
         ))}
       </div>
 
-      {
-        showBuyP2PModal && (
-          <div className="w-[100%] pt-44 px-12 !fixed bg-white top-0 left-0 h-[250vh]">
-            <BuyP2PModal setShowBuyP2PModal={setShowBuyP2PModal} closeModal={closeModal} baseCurrency={baseCurrency} selectedTab={selectedTab}/>
-          </div>
-        )
-      }
+      {showBuyP2PModal && (
+        <div className="w-[100%] pt-28 md:pt-44 px-12 !fixed bg-white top-0 left-0 h-[100vh]">
+          <BuyP2PModal
+            setShowBuyP2PModal={setShowBuyP2PModal}
+            closeModal={closeModal}
+            baseCurrency={baseCurrency}
+            selectedTab={selectedTab}
+          />
+        </div>
+      )}
 
       {showSelectCurrencyDropdown && (
         <div className="w-[100%] pt-44 px-12 !fixed bg-white top-0 left-0 h-[250vh]">

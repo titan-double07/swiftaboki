@@ -8,6 +8,7 @@ import { Icons } from "@/components/icons";
 import InternationalTransfer from "./internationalTransfer/InternationalTransfer";
 import { useSelector } from "react-redux";
 import { IAccount } from "@/interfaces";
+import ModalHeaderFlex from "../ModalHeaderFlex";
 interface ISendMoney {
   closeModal(): void;
 }
@@ -32,13 +33,19 @@ export default function SendMoney({ closeModal }: ISendMoney) {
       initial="hidden"
       animate="visible"
       exit="exit"
-      className="lg:w-[29vw] w-4/5 md:w-3/5 pt-36 py-12 relative z-[999] overflow-y-scroll h-screen bg-white">
+      className="lg:w-[29vw] w-full md:w-3/5 md:pt-36 pt-28 py-12 relative z-[999] overflow-y-scroll h-screen bg-white">
       {!modalOption && (
-        <div className="pl-12">
-          <ModalHeaderText
+        <div className="md:pl-12 px-10">
+          <ModalHeaderFlex
+            handleBack={closeModal}
+            Text="Send Money"
+            className="!text-purple-200 "
+          />
+          <div className="mb-8"></div>
+          {/* <ModalHeaderText
             content="Send Money"
             className="text-left !text-purple-200 mb-8"
-          />
+          /> */}
           <ModalFlex
             icon={<Icons.international />}
             headerText="International transfer"

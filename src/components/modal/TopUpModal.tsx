@@ -1,37 +1,44 @@
-import React, { useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { slideIn } from "@/utils/framerMotionVariants";
-import ModalHeaderText from "../typography/ModalHeaderText";
-import ModalFlex from "./ModalFlex";
-import { Icons } from "../icons";
-import { useSelector } from "react-redux";
 import { IAccount } from "@/interfaces";
+import { slideIn } from "@/utils/framerMotionVariants";
+import { FlutterWaveButton } from "flutterwave-react-v3";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { FlutterWaveButton } from 'flutterwave-react-v3';
+import { enqueueSnackbar } from "notistack";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { Icons } from "../icons";
+import ModalHeaderText from "../typography/ModalHeaderText";
 import TextMd from "../typography/TextMd";
 import TextSm from "../typography/TextSm";
-import { enqueueSnackbar } from "notistack";
-import {useFormData} from "./flutterWave/flwConfig"
+import ModalFlex from "./ModalFlex";
+import { useFormData } from "./flutterWave/flwConfig";
+
+import { Mobile } from "@/lib/mediaQuery";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "../ui/drawer";
 
 interface ITopUpModal {
   closeModal(): void;
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-
-export default function TopUpModal({ closeModal }: ITopUpModal) {
+export default function TopUpModal({
+  closeModal,
+  showModal,
+  setShowModal,
+}: ITopUpModal) {
   const [activeTab, setActiveTab] = useState(0);
-  const [isValid, setIsValid] = useState(true)
+  const [isValid, setIsValid] = useState(true);
   const [email, setEmail] = useState("");
-//   const [formData, setFormData] = useState({
-//     email,
-//     phoneNumber: "",
-//     isValid: true,
-//     currency: "",
-//     accHolderName: "",
-//     amount: ""
-// })
-const {formData, handleInputChange, fwConfig} = useFormData()
-
+  //   const [formData, setFormData] = useState({
+  //     email,
+  //     phoneNumber: "",
+  //     isValid: true,
+  //     currency: "",
+  //     accHolderName: "",
+  //     amount: ""
+  // })
+  const { formData, handleInputChange, fwConfig } = useFormData();
 
   const account: IAccount = useSelector(
     (state: any) => state.account.selectedAccount
@@ -67,7 +74,7 @@ const {formData, handleInputChange, fwConfig} = useFormData()
   //       }
   //       return;
   //     }
-      
+
   //     if (type === "ref3") {
   //       if (inputRef3.current) {
   //         await navigator.clipboard.writeText(textToCopy3);
@@ -83,43 +90,41 @@ const {formData, handleInputChange, fwConfig} = useFormData()
   //   }
   // };
 
-
-  const surportedCurrency = ["NGN", "USD", "CAD", "EUR"]
+  const surportedCurrency = ["NGN", "USD", "CAD", "EUR"];
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     setIsValid(emailRegex.test(event.target.value.trim()));
-      setEmail(event.target.value);
-      formData.email = event.target.value
+    setEmail(event.target.value);
+    formData.email = event.target.value;
   };
 
-  
   const handleSubmit = () => {
-
-    console.log(`email: ${formData.email}\nphoneNumber: ${formData.phoneNumber}\n expDate: ${formData.currency}\naccHolderName: ${formData.accHolderName}\nCurrency: ${formData.currency}\nAmount: ${formData.amount}`)
-    fetch('/api/payment', {
-      method: 'POST',
+    console.log(
+      `email: ${formData.email}\nphoneNumber: ${formData.phoneNumber}\n expDate: ${formData.currency}\naccHolderName: ${formData.accHolderName}\nCurrency: ${formData.currency}\nAmount: ${formData.amount}`
+    );
+    fetch("/api/payment", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        formData
+        formData,
       }),
     })
-    .then(response => {
-      console.log(response);
-      // Handle response
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      // Handle error
-    });
+      .then((response) => {
+        console.log(response);
+        // Handle response
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        // Handle error
+      });
     enqueueSnackbar(`Submited`, {
       variant: "success",
-      anchorOrigin: { vertical: "bottom", horizontal: "right" },})
+      anchorOrigin: { vertical: "bottom", horizontal: "right" },
+    });
   };
-
-
 
   return (
     <motion.div
@@ -127,21 +132,44 @@ const {formData, handleInputChange, fwConfig} = useFormData()
       initial="hidden"
       animate="visible"
       exit="exit"
-      className={`lg:w-[29vw] pt-32 py-12 pb-36 relative z-[999] h-screen bg-white overflow-y-scroll`}
-    >
+      className={`lg:w-[29vw] pt-32 py-12 pb-36 relative z-[999]  lg:h-screen bg-white overflow-y-scroll`}>
       {activeTab === 0 && (
         <>
-          <ModalHeaderText content="Top up" className="pl-8 mb-8" />
-          <div className="w-full px-8">
-            <ModalFlex
-              // headerText="Fund with debit/Credit Card"
-              // childText="Tap to view Details"
-              headerText="Fund With Bank"
-              childText="choose your payment option"
-              icon={<Icons.bank />}
-              handleClick={() => setActiveTab(2)}
-            />
+          <div className="md:block hidden">
+            <ModalHeaderText content="Top up" className="pl-8 mb-8" />
+            <div className="w-full px-8">
+              <ModalFlex
+                // headerText="Fund with debit/Credit Card"
+                // childText="Tap to view Details"
+                headerText="Fund With Bank"
+                childText="choose your payment option"
+                icon={<Icons.bank />}
+                handleClick={() => setActiveTab(2)}
+              />
+            </div>
           </div>
+
+          <Mobile>
+            <Drawer open={showModal} onOpenChange={setShowModal}>
+              <DrawerContent>
+                <DrawerHeader>
+                  <DrawerTitle>
+                    <ModalHeaderText content="Top up" className="" />
+                  </DrawerTitle>
+                </DrawerHeader>
+                <div className="w-full px-8 pt-5">
+                  <ModalFlex
+                    // headerText="Fund with debit/Credit Card"
+                    // childText="Tap to view Details"
+                    headerText="Fund With Bank"
+                    childText="choose your payment option"
+                    icon={<Icons.bank />}
+                    handleClick={() => setActiveTab(2)}
+                  />
+                </div>
+              </DrawerContent>
+            </Drawer>
+          </Mobile>
         </>
       )}
       {/* {activeTab === 1 && (
@@ -224,8 +252,8 @@ const {formData, handleInputChange, fwConfig} = useFormData()
         </div>
       )}*/}
       {activeTab === 2 && (
-        <div className="w-full">
-          <div className="flex justify-start gap-[4.5rem] items-center px-12">
+        <div className="w-screen md:w-full">
+          <div className="flex justify-start gap-[4.5rem] items-center lg:px-12 px-8">
             <Icons.back
               onClick={() => setActiveTab(0)}
               className="cursor-pointer"
@@ -255,14 +283,13 @@ const {formData, handleInputChange, fwConfig} = useFormData()
 
           <div className="w-full mt-8 px-8  items-center">
             <div className="!bg-grey-400 px-[1.69rem] rounded-secondary py-6">
-
-
               <p className="text-md font-semibold">Email</p>
               <div className="relative mt-2">
                 <input
                   type="text"
-                  className={`w-full py-3 pl-4 pr-10 border border-gray-500 rounded-lg placeholder:text-grey-100 placeholder:text-md placeholder:font-semibold ${isValid? "": "Invalid"}`}
-
+                  className={`w-full py-3 pl-4 pr-10 border border-gray-500 rounded-lg placeholder:text-grey-100 placeholder:text-md placeholder:font-semibold ${
+                    isValid ? "" : "Invalid"
+                  }`}
                   placeholder="                       User@email.com"
                   value={email}
                   onChange={handleEmailChange}
@@ -270,8 +297,7 @@ const {formData, handleInputChange, fwConfig} = useFormData()
                 {!isValid && <p className="error text-red">Invalid email</p>}
               </div>
 
-              
-            <p className="text-md font-semibold mt-4">Name</p>
+              <p className="text-md font-semibold mt-4">Name</p>
               <div className="relative mt-2">
                 <input
                   type="text"
@@ -292,10 +318,9 @@ const {formData, handleInputChange, fwConfig} = useFormData()
                   onChange={(e) => handleInputChange(e, "phoneNumber")}
                 />
               </div>
-              
+
               <p className="text-md font-semibold mt-4">Currency</p>
               <div className="relative mt-2">
-                
                 <input
                   type="text"
                   className="w-full py-3 pl-4 pr-10 border border-gray-500 rounded-lg placeholder:text-grey-100 placeholder:text-md placeholder:font-semibold"
@@ -303,15 +328,14 @@ const {formData, handleInputChange, fwConfig} = useFormData()
                   value={formData.currency}
                   list="options"
                   onChange={(e) => handleInputChange(e, "currency")}
-                  />
-                 <datalist id="options">
+                />
+                <datalist id="options">
                   {surportedCurrency.map((option, index) => (
-                  <option key={index} value={option} />
+                    <option key={index} value={option} />
                   ))}
-                  </datalist>
+                </datalist>
               </div>
 
-              
               <p className="text-md font-semibold mt-4">Amount</p>
               <div className="relative mt-2">
                 <input
@@ -323,26 +347,28 @@ const {formData, handleInputChange, fwConfig} = useFormData()
                 />
               </div>
               <div className="flex justify-center mt-4">
-            <button onClick={handleSubmit} className="mt-4 bg-purple-600 hover:bg-purple-900 text-white font-bold py-2 px-4 rounded">
-              <FlutterWaveButton
-              className="text-md font-normal text-gray"
-              text={fwConfig.text}
-              callback={fwConfig.callback}
-              onClose={fwConfig.onClose}
-              public_key={fwConfig.public_key}
-              tx_ref={fwConfig.tx_ref}
-              amount={fwConfig.amount}
-              currency={fwConfig.currency}
-              payment_options={fwConfig.payment_options}
-              customer={fwConfig.customer}
-              customizations={fwConfig.customizations}  
-              />
-              </button>
-            </div>
+                <button
+                  onClick={handleSubmit}
+                  className="mt-4 bg-purple-600 hover:bg-purple-900 text-white font-bold py-2 px-4 rounded">
+                  <FlutterWaveButton
+                    className="text-md font-normal text-gray"
+                    text={fwConfig.text}
+                    callback={fwConfig.callback}
+                    onClose={fwConfig.onClose}
+                    public_key={fwConfig.public_key}
+                    tx_ref={fwConfig.tx_ref}
+                    amount={fwConfig.amount}
+                    currency={fwConfig.currency}
+                    payment_options={fwConfig.payment_options}
+                    customer={fwConfig.customer}
+                    customizations={fwConfig.customizations}
+                  />
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      )} 
+      )}
     </motion.div>
   );
 }

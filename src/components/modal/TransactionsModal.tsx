@@ -18,9 +18,8 @@ export default function TransactionsModal({
       initial="hidden"
       animate="visible"
       exit="exit"
-      className={`${
-        !fromNav && "pt-36"
-      } lg:w-[29vw] w-4/5 md:w-3/5  lg:py-12 pb-36 relative z-[999] h-screen bg-white overflow-y-scroll`}>
+      className={`${!fromNav && "pt-36"} lg:w-[29vw] w-full
+md:pt-36 md:w-3/5  lg:py-12 pb-36 relative z-[999] h-screen bg-white overflow-y-scroll`}>
       <div className="flex justify-between items-center px-12">
         <Icons.back onClick={closeModal} className="cursor-pointer" />
         <ModalHeaderText content="Transactions" />

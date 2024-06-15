@@ -4,6 +4,7 @@ import { slideIn } from "@/utils/framerMotionVariants";
 import ModalHeaderText from "@/components/typography/ModalHeaderText";
 import { Icons } from "@/components/icons";
 import ModalFlex from "../ModalFlex";
+import ModalHeaderFlex from "../ModalHeaderFlex";
 
 interface IPayBills {
   closeModal(): void;
@@ -57,9 +58,14 @@ export default function Paybills({ closeModal }: IPayBills) {
       initial="hidden"
       animate="visible"
       exit="exit"
-      className={` lg:w-[29vw] w-4/5 md:w-3/5 px-8 pt-32  py-12 pb-36 relative z-[999] h-screen bg-white overflow-y-scroll`}>
-      <ModalHeaderText content="Pay Bills" className="" />
-
+      className={` lg:w-[29vw] w-full
+md:pt-36 md:w-3/5 px-8 pt-32  py-12 pb-36 relative z-[999] h-screen bg-white overflow-y-scroll`}>
+      <ModalHeaderFlex
+        handleBack={closeModal}
+        Text="Pay Bills"
+        className="!text-black "
+      />
+      <div className="mb-8"></div>
       <div className="w-full mt-8">
         {payBillsArr.map((bill, index) => (
           <ModalFlex

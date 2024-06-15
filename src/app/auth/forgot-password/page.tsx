@@ -170,13 +170,13 @@ export default function Page() {
 
   return (
     <div className="w-full h-screen flex justify-between items-center">
-      <div className="w-1/2 h-full bg-purple-100">
+      <div className="hidden lg:block w-[50%] min-h-screen bg-purple-100 pt-12">
         <Slider />
       </div>
 
       {/* right */}
-      <div className="w-[50%] h-full flex flex-col justify-center items-start p-16">
-        <div>
+      <div className="w-[90%] mx-auto mt-10 lg:mt-0  max-w-[500px] lg:max-w-none lg:w-[50%] flex flex-col justify-start lg:justify-center items-center lg:items-start lg:pl-20 h-screen lg:h-full bg-white">
+        <div className="w-full mt-10 pl-4 lg:pl-0">
           <FormHeader
             setActiveTab={setActiveTab}
             headerArr={headers}
@@ -186,7 +186,7 @@ export default function Page() {
 
         {activeTab === 1 ? (
           <>
-            <div className="mt-6">
+            <div className="mt-6 w-full lg:px-0 px-4">
               <Input
                 type="text"
                 value={userEmail}
@@ -198,7 +198,7 @@ export default function Page() {
                 disabled={!emailRegex.test(userEmail) || loading}
                 content={loading ? "Loading..." : "Next"}
                 onClick={resetPassword}
-                className="mt-16"
+                className="mt-16 w-full lg:w-[23.25rem] "
               />{" "}
             </div>
             <p className="text-sm flex justify-start ml-[10%] items-center text-grey-100 font-medium mt-6">
@@ -210,7 +210,7 @@ export default function Page() {
           </>
         ) : activeTab === 2 ? (
           <>
-            <div className="mt-6">
+            <div className="mt-6 w-full lg:px-0 px-4">
               <OtpInput
                 setValue={setOtp}
                 value={otp}
@@ -226,15 +226,14 @@ export default function Page() {
               ) : (
                 <p
                   className="text-sm cursor-pointer font-medium text-purple-100 mt-6 underline"
-                  onClick={handleResendOTP}
-                >
+                  onClick={handleResendOTP}>
                   Resend OTP
                 </p>
               )}
               <Button
                 disabled={otp.length !== 5 || loading}
                 content={loading ? "Loading..." : "Next"}
-                className="mt-16"
+                className="mt-16 w-full lg:w-[23.25rem] "
               />{" "}
             </div>
             <p className="text-sm flex justify-start ml-[10%] items-center text-grey-100 font-medium mt-6">
@@ -246,7 +245,7 @@ export default function Page() {
           </>
         ) : activeTab === 3 ? (
           <>
-            <div className="mt-6">
+            <div className="mt-6 w-full lg:px-0 px-4">
               <Input
                 type="password"
                 value={password}
@@ -257,12 +256,11 @@ export default function Page() {
                 top="top-10"
                 isPassword
               />
-              <div className="mt-6">
+              <div className="mt-6 w-full lg:px-0 px-4">
                 {passwordOpt.map((opt, index) => (
                   <div
                     className="flex justify-start items-center gap-2 mt-2"
-                    key={index}
-                  >
+                    key={index}>
                     <TickCircle
                       className="text-primary-4"
                       variant="Bold"
@@ -289,7 +287,7 @@ export default function Page() {
                 }
                 content="Next"
                 onClick={handleActiveTab}
-                className="mt-16"
+                className="mt-16 w-full lg:w-[23.25rem] "
               />{" "}
             </div>
             <p className="text-sm flex justify-start ml-[10%] items-center text-grey-100 font-medium mt-6">
@@ -301,7 +299,7 @@ export default function Page() {
           </>
         ) : activeTab === 4 ? (
           <>
-            <div className="mt-6">
+            <div className="mt-6 w-full lg:px-0 px-4">
               <Input
                 type="password"
                 value={confirmPassword}
@@ -316,7 +314,7 @@ export default function Page() {
                 disabled={confirmPassword !== password || loading}
                 content={loading ? "Loading..." : "Next"}
                 onClick={handleSetPassword}
-                className="mt-16"
+                className="mt-16 w-full lg:w-[23.25rem] "
               />{" "}
             </div>
             <p className="text-sm flex justify-start ml-[10%] items-center text-grey-100 font-medium mt-6">
