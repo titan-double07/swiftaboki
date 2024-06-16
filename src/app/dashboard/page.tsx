@@ -65,8 +65,7 @@ export default function Dashboard() {
       {/* first section */}
       <div className="w-full flex  justify-start gap-12 items-start">
         <Card openModal={openModal} />
-        <div
-          className="flex flex-col">
+        <div className="flex flex-col">
           {topUp_swap_more.map((option, index) => (
             <div
               className="flex justify-start mb-10 items-center gap-2 cursor-pointer hover:scale-105 transition-all"
@@ -93,14 +92,38 @@ export default function Dashboard() {
       {/* the modal component */}
       {showModal && (
         <ModalBackDrop closeModal={closeModal}>
-          {modalType === "account" && <AccountModal closeModal={closeModal} />}
+          {modalType === "account" && (
+            <AccountModal
+              setShowModal={setShowModal}
+              showModal={showModal}
+              closeModal={closeModal}
+            />
+          )}
           {modalType === "transactions" && (
             <TransactionsModal closeModal={closeModal} />
           )}
-          {modalType === "Top up" && <TopUpModal closeModal={closeModal} />}
-          {modalType === "Swap" && <SwapModal openP2PModal={openModal} />}
+          {modalType === "Top up" && (
+            <TopUpModal
+              setShowModal={setShowModal}
+              showModal={showModal}
+              closeModal={closeModal}
+            />
+          )}
+          {modalType === "Swap" && (
+            <SwapModal
+              setShowModal={setShowModal}
+              showModal={showModal}
+              openP2PModal={openModal}
+            />
+          )}
           {modalType === "P2P" && <P2P closeModal={closeModal} />}
-          {modalType === "More" && <MoreModal closeModal={closeModal} />}
+          {modalType === "More" && (
+            <MoreModal
+              setShowModal={setShowModal}
+              showModal={showModal}
+              closeModal={closeModal}
+            />
+          )}
           {modalType === "Send Money" && <SendMoney closeModal={closeModal} />}
           {modalType === "Receive Money" && (
             <RecieveMoney closeModal={closeModal} />

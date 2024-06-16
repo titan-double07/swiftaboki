@@ -49,7 +49,7 @@ export default function SecureMultiCurrency({
 
   return (
     <div
-      className="px-4 xl:px-[8.5vw] pt-20 "
+      className="px-4 sm:px-10 xl:px-[8.5vw] lg:pt-20 pt-10 "
       style={{
         backgroundImage: 'url("/rect.svg")',
         backgroundSize: "cover",
@@ -58,14 +58,16 @@ export default function SecureMultiCurrency({
         width: "100%",
         backgroundAttachment: "fixed",
       }}>
-      <p className="text-4xl text-black font-bold lg:w-[48rem] text-center mx-auto ">
+      <p className="md:text-4xl text-2xl text-black font-bold lg:w-[48rem] text-center mx-auto ">
         {text}
       </p>
 
       {showFeatures && (
-        <div className="py-[2.1rem] rounded-[20px] mt-20 md:px-14 bg-white flex justify-between flex-col md:flex-row items-center">
+        <div className="py-[2.1rem]  lg:mt-20 mt-10 lg:px-14 mx-5 bg-white flex justify-between flex-col gap-6 md:flex-row items-center rounded-secondary px-10 ">
           {arrOptions.map((product, index) => (
-            <div className="md:w-[13rem] cursor-pointer flex md:block gap-5 items-center " key={index}>
+            <div
+              className="md:w-[13rem] cursor-pointer flex lg:flex-row flex-col md:block md:gap-5 items-center md:text-left text-center "
+              key={index}>
               <div className="h-10 w-10 flex justify-center items-center">
                 {product.icon}
               </div>
@@ -84,13 +86,13 @@ export default function SecureMultiCurrency({
         </div>
       )}
 
-      <div className="flex justify-between items-center mt-28">
+      <div className="flex lg:flex-row flex-col justify-between items-center lg:mt-28 mt-10 lg:gap-0 gap-10">
         <div>
           {arrayOptions.map((option, index) => (
             <div
               className={`${
                 index === 1 && "my-16"
-              } flex justify-start items-center gap-6`}
+              } flex md:flex-row flex-col justify-start items-center gap-6 md:text-left text-center`}
               key={index}>
               <div className="md:w-[4.125rem] md:h-[4.125rem] size-14 rounded-full bg-purple-200 flex justify-center items-center shrink-0 text-white text-xl font-bld">
                 {option.number}
@@ -109,7 +111,7 @@ export default function SecureMultiCurrency({
           ))}
         </div>
 
-        <div className=" hidden md:block w-[27.7vw] h-[33.5rem]">
+        <div className=" w-4/5 max-w-96 lg:max-w-none lg:w-[27.7vw] lg:h-[33.5rem]">
           <Image src={img} className="w-full mt-8 h-full" alt="" />
         </div>
       </div>

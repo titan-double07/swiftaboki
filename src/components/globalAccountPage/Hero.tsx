@@ -11,17 +11,17 @@ import { motion } from "framer-motion";
 import { Icons } from "../icons";
 import Image from "next/image";
 
-interface IReusableHero{
-  bgText:string;
-  smText:string;
-  img:string;
+interface IReusableHero {
+  bgText: string;
+  smText: string;
+  img: string;
 }
 
-export default function ReusableHero({bgText,img,smText}:IReusableHero) {
+export default function ReusableHero({ bgText, img, smText }: IReusableHero) {
   const [isLoaded, setIsLoaded] = useState(false);
   const scrollRef = useRef(null);
   return (
-    <div className="flex justify-between w-full items-center md:flex-row flex-col  mt-14 md:px-[7.8vw] px-12 pb-24 lg:pb-44">
+    <div className="flex justify-between w-full items-center lg:flex-row flex-col  lg:mt-14 md:px-[7.8vw] px-8 pb-24 lg:pb-44 text-center lg:text-left gap-10 lg:gap-0">
       <div className="lg:w-[53%] ">
         <motion.h2
           variants={fadeUp1}
@@ -29,8 +29,7 @@ export default function ReusableHero({bgText,img,smText}:IReusableHero) {
           initial="hide"
           whileInView="show"
           ref={scrollRef}
-          className="md:text-[4.5rem] leading-tight lg:leading-normal  text-6xl   font-extrabold"
-        >
+          className="md:text-6xl leading-tight lg:leading-normal  text-4xl   font-extrabold">
           {bgText}
         </motion.h2>
 
@@ -40,20 +39,18 @@ export default function ReusableHero({bgText,img,smText}:IReusableHero) {
           initial="hide"
           whileInView="show"
           ref={scrollRef}
-          className="text-4xl lg:w-[32rem]"
-        >
+          className="lg:text-4xl md:text-3xl text-xl lg:w-[32rem]">
           {smText}
           <span className="font-extrabold">SWIFT ABOKI</span>
         </motion.p>
-{/* store buttons */}
+        {/* store buttons */}
         <motion.div
           variants={fadeUp3}
           viewport={{ once: true }}
           initial="hide"
           whileInView="show"
           ref={scrollRef}
-          className="flex  mt-8 justify-center md:justify-start items-center gap-8"
-        >
+          className="flex flex-col md:flex-row mt-8 justify-center lg:justify-start items-center gap-8">
           <button className="w-40 h-12 bg-black rounded-primary hover:scale-105 transition-all">
             <Icons.playstore />
           </button>
@@ -72,12 +69,12 @@ export default function ReusableHero({bgText,img,smText}:IReusableHero) {
         }
         transition={{ duration: 1, delay: 1 }}
         viewport={{ once: true }}
-        className="!w-[43%] h-[27.25rem] relative hidden md:block"
-      >
+        className="lg:!w-[43%] lg:h-[27.25rem] relative  w-full max-w-[500px] lg:max-w-none  ">
         <Image
           src={img}
           onLoad={() => setIsLoaded(true)}
-          className=" hidden lg:block w-full h-full"
+          className=" w-full h-full "
+        
           alt=""
         />
       </motion.div>
